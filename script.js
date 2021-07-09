@@ -92,6 +92,7 @@ function displayBooks(newBook){
     div.classList.add('card-container')
     
     let h3 = document.createElement('h3');
+    let hr = document.createElement('hr');
     let p1 = document.createElement('p');
     let p2 = document.createElement('p');
 
@@ -121,6 +122,7 @@ function displayBooks(newBook){
     card.appendChild(div);
     div.appendChild(removeBtn); 
     div.appendChild(h3);
+    div.appendChild(hr);
     div.appendChild(p1);
     div.appendChild(p2);
     div.appendChild(toggleBtn);  

@@ -2,16 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
 :root{
-    --background: #A0CED9;
-    --formBackground: #C6E2E8;
+    --background: #FF0068;
+    --formBackground: #FFA6CA;
     --btn: #ADF7B6;
     --btnText: #071012;
-    --cardBackground: #FFEE93;
+    --cardBackground: #00FF97;
     --cardText: #071012;
     --border: #071012 ;
     --removeBtn: #d0451b;
     --removeBtnHover:#e64f00;
-    --toggleBtnRead:#81B214;
+    --toggleBtnRead:#00BF71;
     --toggleBtnHover: #B3D172;
     --toggleBtnToRead:#F58634;
 
@@ -133,5 +133,13 @@ button{
     overflow: auto;
   }
 .card-container h3{
-    margin-top: 2rem;
+    margin: 1rem;
+    border-radius: 4px;
+    /* background-color: #B3FFE0; */
+}
+.card-container hr{
+    width: 20%;
+    height: 1px;
+    border: none;
+    background-color: gray;
 }
