@@ -1,6 +1,7 @@
 
 const newBookBtn = document.querySelector('#new-book');
 const formContainer = document.querySelector('.form-container');
+const bookStats = document.querySelector('.book-stats');
 const card = document.querySelector('.card');
 const title = document.createElement('input');
 const author = document.createElement('input');
@@ -9,6 +10,10 @@ const readStatus = document.createElement('select');
 const option1 = document.createElement('option');
 const option2 = document.createElement('option');
 const btn = document.createElement('button');
+
+const total = document.createElement('p');
+const read = document.createElement('p');
+const toRead = document.createElement('p');
 
 let myLibrary = [
 {
@@ -29,6 +34,7 @@ function defaultBooks(){
     myLibrary.forEach((book) => {
         displayBooks(book);
     })
+    displayBookStats();
 }
 
 function Books(title,author,pages,readStatus){
@@ -43,7 +49,8 @@ function addBookToLibrary(){
         let newBook = new Books(title.value,author.value,pages.value,readStatus.value);
         myLibrary.push(newBook);    
         displayBooks(newBook);
-        
+        displayBookStats();
+
         title.value = '';
         author.value = '';
         pages.value = '';
@@ -123,6 +130,8 @@ function displayBooks(newBook){
         
         let index = myLibrary.indexOf(newBook);
         myLibrary.splice(index,1);
+
+        displayBookStats();
     })
 
     toggleBtn.addEventListener('click',() => {
@@ -135,9 +144,29 @@ function displayBooks(newBook){
             toggleBtn.textContent = newBook.readStatus;
             toggleBtn.setAttribute('style',`background:${toggleBtnColor}`)
         }
+        displayBookStats();
     })        
 }
 
+function displayBookStats(){
+
+    let readCounter = 0;
+    let toReadCounter = 0;
+
+    myLibrary.forEach((book) => {
+        if(book.readStatus === 'Read'){
+            readCounter++;
+        }else toReadCounter++;
+    })
+
+    total.textContent = 'Total Books: ' + myLibrary.length;
+    read.textContent = 'Read: ' + readCounter;
+    toRead.textContent = 'To Read: ' + toReadCounter;
+
+    bookStats.appendChild(total);
+    bookStats.appendChild(read);
+    bookStats.appendChild(toRead);
+}
 
 defaultBooks();
 newBookBtn.addEventListener('click',createForm);
