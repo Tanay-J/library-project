@@ -30,6 +30,13 @@ let myLibrary = [
 }
 ];
 
+if(!localStorage.getItem('library')){
+    localStorage.setItem('library',JSON.stringify(myLibrary));
+}else{
+    myLibrary = JSON.parse(localStorage.getItem('library'));
+}
+
+
 function defaultBooks(){
     myLibrary.forEach((book) => {
         displayBooks(book);
@@ -44,10 +51,16 @@ function Books(title,author,pages,readStatus){
     this.readStatus = readStatus;
 }
 
+function updateStorage() {
+	localStorage.setItem('library', JSON.stringify(myLibrary));
+    console.log(localStorage.getItem('library'))
+}
+
 function addBookToLibrary(){
     if(title.value && author.value && pages.value){
         let newBook = new Books(title.value,author.value,pages.value,readStatus.value);
         myLibrary.push(newBook);    
+        updateStorage();
         displayBooks(newBook);
         displayBookStats();
 
@@ -55,6 +68,7 @@ function addBookToLibrary(){
         author.value = '';
         pages.value = '';
     }     
+
 }
 function createForm(){    
     
@@ -114,9 +128,9 @@ function displayBooks(newBook){
     toggleBtn.title = 'Click to change';
 
     if(newBook.readStatus === 'Read'){
-        toggleBtn.setAttribute('style',`background:${toggleBtnColor}`)
+        toggleBtn.setAttribute('style',`background:${toggleBtnColor}`);
     }else if(newBook.readStatus === 'To Read'){
-        toggleBtn.setAttribute('style',`background:${toggleBtnColor2}`)
+        toggleBtn.setAttribute('style',`background:${toggleBtnColor2}`);
     }
     
     card.appendChild(div);
@@ -132,7 +146,7 @@ function displayBooks(newBook){
         
         let index = myLibrary.indexOf(newBook);
         myLibrary.splice(index,1);
-
+        updateStorage();
         displayBookStats();
     })
 
@@ -140,10 +154,12 @@ function displayBooks(newBook){
         if(newBook.readStatus === 'Read'){
             newBook.readStatus = 'To Read';
             toggleBtn.textContent = newBook.readStatus;
+            updateStorage();
             toggleBtn.setAttribute('style',`background:${toggleBtnColor2}`)
         }else if(newBook.readStatus === 'To Read') {
             newBook.readStatus = 'Read';
             toggleBtn.textContent = newBook.readStatus;
+            updateStorage();
             toggleBtn.setAttribute('style',`background:${toggleBtnColor}`)
         }
         displayBookStats();
@@ -169,6 +185,21 @@ function displayBookStats(){
     bookStats.appendChild(read);
     bookStats.appendChild(toRead);
 }
+
+
+// function populateStorage(){
+//     myLibrary.forEach((book) => {
+//         localStorage.setItem('title',book.title);
+//         localStorage.setItem('author',book.author);
+//         localStorage.setItem('pages',book.pages);
+//         localStorage.setItem('readStatus',book.readStatus);
+//     })
+
+// }
+
+// function getFromStorage(){
+
+// }
 
 defaultBooks();
 newBookBtn.addEventListener('click',createForm);
